@@ -61,7 +61,7 @@
 			drawSpectrum(hex1, hex2, hex3);
 		}
 
-		function drawSpectrum(){
+		function drawSpectrum(hex1, hex2, hex3){
 			var	cwidth = canvas.width;
 			var	cheight = canvas.height - 2;
 			var	gap = 2; //gap between meters
@@ -71,21 +71,17 @@
 			var	capYPositionArray = [];    //store the vertical position of hte caps for the previous frame
 			var ctx = canvas.getContext('2d');
 			var	gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-			if(arguments.length === 3){
-				if (arguments[0] !== undefined){
-					gradient.addColorStop(1, arguments[0]);
-					gradient.addColorStop(0.5, arguments[1]);
-					gradient.addColorStop(0, arguments[2]);
+
+				if (hex1){
+					gradient.addColorStop(1, hex1);
+					gradient.addColorStop(0.5, hex2);
+					gradient.addColorStop(0, hex3);
 				}else{
 					gradient.addColorStop(1, '#000');
 					gradient.addColorStop(0.5, '#000');
 					gradient.addColorStop(0, '#000');
 				}
-			}else{
-				gradient.addColorStop(1, '#0f0');
-				gradient.addColorStop(0.5, '#ff0');
-				gradient.addColorStop(0, '#f00');
-			}
+
 			var drawMeter = function() {
 				var array = new Uint8Array(analyzerNode.frequencyBinCount);
 				analyzerNode.getByteFrequencyData(array);
