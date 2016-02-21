@@ -3,7 +3,7 @@
  */
 (function($) {
 	$(window).load(function() {
-		var meterWidth = 8.5;
+
 		var colorThief = new ColorThief();
 		var active = false;
 
@@ -18,6 +18,8 @@
 		var canvas = null;
 
 		var targetDiv = $(".spectrumAnalyzer");
+		var meterWidth = targetDiv.width() / 72; // show 72 bars
+
 		targetDiv.append('<canvas id="canvas" width="' + targetDiv.width() + '" height="' + targetDiv.height() + '"></canvas>');
 		canvas = targetDiv.find("#canvas").get(0);
 		var vid = $("#vid").get(0);
