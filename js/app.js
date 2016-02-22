@@ -18,7 +18,9 @@
 		var canvas = null;
 
 		var targetDiv = $(".spectrumAnalyzer");
-		var meterWidth = targetDiv.width() / 72; // show 72 bars
+		var numberOfBars = 62; // show 62 bars
+		var	gap = 2; //gap between bars
+		var meterWidth = (targetDiv.width() / numberOfBars) - gap;
 
 		targetDiv.append('<canvas id="canvas" width="' + targetDiv.width() + '" height="' + targetDiv.height() + '"></canvas>');
 		canvas = targetDiv.find("#canvas").get(0);
@@ -66,10 +68,8 @@
 		function drawSpectrum(hex1, hex2, hex3){
 			var	cwidth = canvas.width;
 			var	cheight = canvas.height - 2;
-			var	gap = 2; //gap between meters
 			var	capHeight = 2;
 			var	capStyle = '#fff';
-			var	meterNum = 800 / (10 + 2); //count of the meters
 			var	capYPositionArray = [];    //store the vertical position of hte caps for the previous frame
 			var ctx = canvas.getContext('2d');
 			var	gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
@@ -101,23 +101,23 @@
 						return;
 					};
 				};
-				var step = 10;// Math.round(array.length / meterNum); //sample limited data from the total array
+				var step = 10;// Math.round(array.length / numberOfBars); //sample limited data from the total array
 				ctx.clearRect(0, 0, cwidth, cheight);
-				for (var i = 0; i < meterNum; i++) {
+				for (var i = 0; i < numberOfBars; i++) {
 					var value = array[i * step];
-					if (capYPositionArray.length < Math.round(meterNum)) {
+					if (capYPositionArray.length < Math.round(numberOfBars)) {
 						capYPositionArray.push(value);
 					};
 					ctx.fillStyle = capStyle;
 					//draw the cap, with transition effect
 					if (value < capYPositionArray[i]) {
-						ctx.fillRect(i * (meterWidth+gap), cheight - (--capYPositionArray[i]), meterWidth, capHeight);
+						ctx.fillRect(i * (meterWidth + gap), cheight - (--capYPositionArray[i]), meterWidth, capHeight);
 					} else {
-						ctx.fillRect(i * (meterWidth+gap), cheight - value, meterWidth, capHeight);
+						ctx.fillRect(i * (meterWidth + gap), cheight - value, meterWidth, capHeight);
 						capYPositionArray[i] = value;
 					};
 					ctx.fillStyle = gradient; //set the filllStyle to gradient for a better look
-					ctx.fillRect(i * (meterWidth+gap) /*meterWidth+gap*/ , cheight - value + capHeight, meterWidth, cheight); //the meter
+					ctx.fillRect(i * (meterWidth + gap) , cheight - value + capHeight, meterWidth, cheight); //the meter
 				}
 				animationId = requestAnimationFrame(drawMeter);
 			}
