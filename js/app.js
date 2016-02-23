@@ -18,7 +18,7 @@
 		var canvas = null;
 
 		var targetDiv = $(".spectrumAnalyzer");
-		var numberOfBars = 62; // show 62 bars
+		var numberOfBars = 60; // show 60 bars
 		var	gap = 2; //gap between bars
 		var meterWidth = (targetDiv.width() / numberOfBars) - gap;
 
@@ -61,8 +61,10 @@
 				var hex1 = rgbToHex(color1[0],color1[1],color1[2]);
 				var hex2 = rgbToHex(color2[0],color2[1],color2[2]);
 				var hex3 = rgbToHex(color3[0],color3[1],color3[2]);
+				drawSpectrum(hex1, hex2, hex3);
+			}else{
+				drawSpectrum('#0f0', '#ff0', '#f00'); // default colors
 			}
-			drawSpectrum(hex1, hex2, hex3);
 		}
 
 		function drawSpectrum(hex1, hex2, hex3){
@@ -73,16 +75,9 @@
 			var	capYPositionArray = [];    //store the vertical position of hte caps for the previous frame
 			var ctx = canvas.getContext('2d');
 			var	gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-
-				if (hex1){
-					gradient.addColorStop(1, hex1);
-					gradient.addColorStop(0.5, hex2);
-					gradient.addColorStop(0, hex3);
-				}else{
-					gradient.addColorStop(1, '#000');
-					gradient.addColorStop(0.5, '#000');
-					gradient.addColorStop(0, '#000');
-				}
+			gradient.addColorStop(1, hex1);
+			gradient.addColorStop(0.5, hex2);
+			gradient.addColorStop(0, hex3);
 
 			var drawMeter = function() {
 				var array = new Uint8Array(analyzerNode.frequencyBinCount);
