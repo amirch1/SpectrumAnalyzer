@@ -18,7 +18,7 @@
 		var canvas = null;
 
 		var targetDiv = $(".spectrumAnalyzer");
-		var numberOfBars = 62; // show 62 bars
+		var numberOfBars = 60; // show 60 bars
 		var	gap = 2; //gap between bars
 		var meterWidth = (targetDiv.width() / numberOfBars) - gap;
 

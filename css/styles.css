@@ -1,5 +1,6 @@
 body{
     background-color: black;
+    margin: 0;
 }
 .spectrumAnalyzer{
     width: 640px;
