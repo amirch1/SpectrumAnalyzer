@@ -1,4 +1,4 @@
-# SpectrumAnalyzer
+# Spectrum Analyzer
 Video spectrum analyzer using video colors capture
 
 #Description
