@@ -27,13 +27,14 @@
         var vid = $("#vid").get(0);
 
         vid.onplay = function() {
-            if (prepareAPI()){
+            if (!active && prepareAPI()){
                 mediaSourceNode = audioContext.createMediaElementSource(vid);
                 analyzerNode = audioContext.createAnalyser();
                 mediaSourceNode.connect(analyzerNode);
                 analyzerNode.connect(audioContext.destination);
 
                 status = 1;
+                active = true;
                 sampleIntervalId = setInterval(function(){
                     doSample();
                 }, refreshInterval);
