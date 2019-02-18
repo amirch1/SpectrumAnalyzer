@@ -34,6 +34,7 @@
                 analyzerNode.connect(audioContext.destination);
 
                 status = 1;
+                active = true;
                 sampleIntervalId = setInterval(function(){
                     doSample();
                 }, refreshInterval);
