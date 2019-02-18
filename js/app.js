@@ -26,12 +26,19 @@
 		canvas = targetDiv.find("#canvas").get(0);
 		var vid = $("#vid").get(0);
 
-		if (prepareAPI()){
-			mediaSourceNode = audioContext.createMediaElementSource(vid);
-			analyzerNode = audioContext.createAnalyser();
-			mediaSourceNode.connect(analyzerNode);
-			analyzerNode.connect(audioContext.destination);
-		}
+        vid.onplay = function() {
+            if (prepareAPI()){
+                mediaSourceNode = audioContext.createMediaElementSource(vid);
+                analyzerNode = audioContext.createAnalyser();
+                mediaSourceNode.connect(analyzerNode);
+                analyzerNode.connect(audioContext.destination);
+
+                status = 1;
+                sampleIntervalId = setInterval(function(){
+                    doSample();
+                }, refreshInterval);
+            }
+        };
 
 		function prepareAPI(){
 			window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext;
@@ -122,11 +129,6 @@
 		function rgbToHex (r, g, b) {
 			return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 		}
-
-		status = 1;
-		sampleIntervalId = setInterval(function(){
-			doSample();
-		}, refreshInterval);
 
 	});
 })(jQuery);
